@@ -72,6 +72,7 @@ repositories {
 
 dependencies {
     //noinspection GradleDynamicVersion
+    implementation 'org.jboss.aerogear:aerogear-android-push:5.1.+'
     implementation 'com.facebook.react:react-native:+'  // From node_modules
 }
 
