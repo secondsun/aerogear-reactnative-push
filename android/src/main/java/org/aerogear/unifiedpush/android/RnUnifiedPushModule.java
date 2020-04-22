@@ -22,7 +22,7 @@ import java.net.URI;
 public class RnUnifiedPushModule extends ReactContextBaseJavaModule {
 
     private final ReactApplicationContext reactContext;
-    private ReactMessageHandler messageHandler = new ReactMessageHandler();
+    private final ReactMessageHandler messageHandler = new ReactMessageHandler();
 
     public RnUnifiedPushModule(ReactApplicationContext reactContext) {
         super(reactContext);
