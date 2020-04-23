@@ -19,7 +19,7 @@
     "name": "Red Hat",
     "email": "aerogear@googlegroups.com"
   },
-  "license": "APL",
+  "license": "Apache-2.0",
   "licenseFilename": "LICENSE",
   "readmeFilename": "README.md",
   "peerDependencies": {
@@ -27,7 +27,7 @@
     "react-native": ">=0.60.0-rc.0 <1.0.x"
   },
   "devDependencies": {
-    "react": "^16.11.0",
-    "react-native": "^0.62.1"
+    "react": "^16.9.0",
+    "react-native": "^0.61.5"
   }
 }
