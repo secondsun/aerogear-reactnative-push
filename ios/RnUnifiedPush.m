@@ -1,14 +1,52 @@
 #import "RnUnifiedPush.h"
-
+#import <React/RCTLog.h>
+#import <AeroGearPush/AeroGearPush-Swift.h>
 
 @implementation RnUnifiedPush
 
-RCT_EXPORT_MODULE()
+NSData * curDeviceToken;
 
-RCT_EXPORT_METHOD(sampleMethod:(NSString *)stringArgument numberParameter:(nonnull NSNumber *)numberArgument callback:(RCTResponseSenderBlock)callback)
+- (dispatch_queue_t)methodQueue
 {
-    // TODO: Implement some actually useful functionality
-    callback(@[[NSString stringWithFormat: @"numberArgument: %@ stringArgument: %@", numberArgument, stringArgument]]);
+    return dispatch_get_main_queue();
 }
 
+- (void)application:(UIApplication *)application
+didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    NSLog(@"APNS Success");
+    curDeviceToken = deviceToken;
+}
+
+RCT_EXPORT_MODULE()
+
+RCT_EXPORT_METHOD(init:(NSDictionary *)details successCallback:(RCTResponseSenderBlock)successCallback errorCallback:(RCTResponseSenderBlock)errorCallback)
+{
+    DeviceRegistration *registration =
+    [[DeviceRegistration alloc] initWithServerURL:
+     [NSURL URLWithString:[RCTConvert NSString:details[@"url"]]]];
+    
+    [registration registerWithClientInfo:^(id clientInfo) {
+        
+        // apply the token, to identify this device
+        [clientInfo setDeviceToken:curDeviceToken];
+        
+        [clientInfo setVariantID:[RCTConvert NSString:details[@"variantId"]]];
+        [clientInfo setVariantSecret:[RCTConvert NSString:details[@"secret"]]];
+        
+    } success:^() {
+        successCallback(@"UPS registration worked");
+        
+    } failure:^(NSError *error) {
+        errorCallback(@"UPS registration Error: %@", error);
+    }];
+
+}
+
+RCT_EXPORT_METHOD(registerMessageHandler: (RCTResponseSenderBlock)callback) {
+    RCTLogInfo(@"Pretending to register");
+}
+
+RCT_EXPORT_METHOD(unregisterMessageHandler: (RCTResponseSenderBlock)callback) {
+    RCTLogInfo(@"Pretending to unregister";
+}
 @end
